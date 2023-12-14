@@ -13,3 +13,6 @@
 /.aspell*
 /*.synctex.gz
 *.fdb_latexmk
+*.auxlock
+*.dpth
+*.md5
