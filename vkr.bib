@@ -33,3 +33,144 @@
   abstract  = {In this paper, we give a re-formulation of our previously defined distillation algorithm, which can automatically transform higher-order functional programs into equivalent tail-recursive programs. Our re-formulation simplifies the presentation of the transformation and hopefully makes it easier to understand. Using distillation, it is possible to produce superlinear improvement in the run-time of programs. This represents a significant advance over deforestation, partial evaluation and positive supercompilation, which can only produce a linear improvement.},
   isbn      = {978-3-642-11486-1}
 }
+@article{10.1145/1291220.1291199,
+  author     = {Coutts, Duncan and Leshchinskiy, Roman and Stewart, Don},
+  title      = {Stream Fusion: From Lists to Streams to Nothing at All},
+  year       = {2007},
+  issue_date = {September 2007},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {42},
+  number     = {9},
+  issn       = {0362-1340},
+  url        = {https://doi.org/10.1145/1291220.1291199},
+  doi        = {10.1145/1291220.1291199},
+  abstract   = {This paper presents an automatic deforestation system, stream fusion, based on equational transformations, that fuses a wider range of functions than existing short-cut fusion systems. In particular, stream fusion is able to fuse zips, left folds and functions over nested lists, including list comprehensions. A distinguishing feature of the framework is its simplicity: by transforming list functions to expose their structure, intermediate values are eliminated by general purpose compiler optimisations.We have reimplemented the Haskell standard List library on top of our framework, providing stream fusion for Haskell lists. By allowing a wider range of functions to fuse, we see an increase in the number of occurrences of fusion in typical Haskell programs. We present benchmarks documenting time and space improvements.},
+  journal    = {SIGPLAN Not.},
+  month      = {oct},
+  pages      = {315–326},
+  numpages   = {12},
+  keywords   = {program fusion, functional programming, deforestation, program transformation, program optimisation}
+}
+
+@inproceedings{stream_fusion,
+  author    = {Coutts, Duncan and Leshchinskiy, Roman and Stewart, Don},
+  title     = {Stream Fusion: From Lists to Streams to Nothing at All},
+  year      = {2007},
+  isbn      = {9781595938152},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/1291151.1291199},
+  doi       = {10.1145/1291151.1291199},
+  abstract  = {This paper presents an automatic deforestation system, stream fusion, based on equational transformations, that fuses a wider range of functions than existing short-cut fusion systems. In particular, stream fusion is able to fuse zips, left folds and functions over nested lists, including list comprehensions. A distinguishing feature of the framework is its simplicity: by transforming list functions to expose their structure, intermediate values are eliminated by general purpose compiler optimisations.We have reimplemented the Haskell standard List library on top of our framework, providing stream fusion for Haskell lists. By allowing a wider range of functions to fuse, we see an increase in the number of occurrences of fusion in typical Haskell programs. We present benchmarks documenting time and space improvements.},
+  booktitle = {Proceedings of the 12th ACM SIGPLAN International Conference on Functional Programming},
+  pages     = {315–326},
+  numpages  = {12},
+  keywords  = {program fusion, deforestation, functional programming, program transformation, program optimisation},
+  location  = {Freiburg, Germany},
+  series    = {ICFP '07}
+}
+@article{supercompiler,
+  author     = {Turchin, Valentin F.},
+  title      = {The Concept of a Supercompiler},
+  year       = {1986},
+  issue_date = {July 1986},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {8},
+  number     = {3},
+  issn       = {0164-0925},
+  url        = {https://doi.org/10.1145/5956.5957},
+  doi        = {10.1145/5956.5957},
+  abstract   = {A supercompiler is a program transformer of a certain type. It traces the possible generalized histories of computation by the original program, and compiles an equivalent program, reducing in the process the redundancy that could be present in the original program. The nature of the redundancy that can be eliminated by supercompilation may be various, e.g., some variables might have predefined values (as in partial evaluation), or the structure of control transfer could be made more efficient (as in lazy evaluation), or it could simply be the fact that the same variable is used more than once. The general principles of supercompilation are described and compared with the usual approach to program transformation as a stepwise application of a number of equivalence rules. It is argued that the language Refal serves the needs of supercompilation best. Refal is formally defined and compared with Prolog and other languages. Examples are given of the operation of a Refal supercompiler implemented at CCNY on an IBM/370.},
+  journal    = {ACM Trans. Program. Lang. Syst.},
+  month      = {jun},
+  pages      = {292–325},
+  numpages   = {34}
+}
+@article{deforestation,
+  title    = {Deforestation: transforming programs to eliminate trees},
+  journal  = {Theoretical Computer Science},
+  volume   = {73},
+  number   = {2},
+  pages    = {231-248},
+  year     = {1990},
+  issn     = {0304-3975},
+  doi      = {https://doi.org/10.1016/0304-3975(90)90147-A},
+  url      = {https://www.sciencedirect.com/science/article/pii/030439759090147A},
+  author   = {Philip Wadler},
+  abstract = {An algorithm that transforms programs to eliminate intermediate trees is presented. The algorithm applies to any term containing only functions with definitions in a given syntactic form, and is suitable for incorporation in an optimizing compiler.}
+}
+@misc{tensorflow,
+  title  = { {TensorFlow}: Large-Scale Machine Learning on Heterogeneous Systems},
+  url    = {https://www.tensorflow.org/},
+  note   = {Software available from tensorflow.org},
+  author = {
+            Mart\'{i}n~Abadi and
+            Ashish~Agarwal and
+            Paul~Barham and
+            Eugene~Brevdo and
+            Zhifeng~Chen and
+            Craig~Citro and
+            Greg~S.~Corrado and
+            Andy~Davis and
+            Jeffrey~Dean and
+            Matthieu~Devin and
+            Sanjay~Ghemawat and
+            Ian~Goodfellow and
+            Andrew~Harp and
+            Geoffrey~Irving and
+            Michael~Isard and
+            Yangqing Jia and
+            Rafal~Jozefowicz and
+            Lukasz~Kaiser and
+            Manjunath~Kudlur and
+            Josh~Levenberg and
+            Dandelion~Man\'{e} and
+            Rajat~Monga and
+            Sherry~Moore and
+            Derek~Murray and
+            Chris~Olah and
+            Mike~Schuster and
+            Jonathon~Shlens and
+            Benoit~Steiner and
+            Ilya~Sutskever and
+            Kunal~Talwar and
+            Paul~Tucker and
+            Vincent~Vanhoucke and
+            Vijay~Vasudevan and
+            Fernanda~Vi\'{e}gas and
+            Oriol~Vinyals and
+            Pete~Warden and
+            Martin~Wattenberg and
+            Martin~Wicke and
+            Yuan~Yu and
+            Xiaoqiang~Zheng},
+  year   = {2015}
+}
+@inproceedings{5724850,
+  author    = {Wang, Guibin and Lin, YiSong and Yi, Wei},
+  booktitle = {2010 IEEE/ACM Int'l Conference on Green Computing and Communications \& Int'l Conference on Cyber, Physical and Social Computing},
+  title     = {Kernel Fusion: An Effective Method for Better Power Efficiency on Multithreaded GPU},
+  year      = {2010},
+  volume    = {},
+  number    = {},
+  pages     = {344-350},
+  doi       = {10.1109/GreenCom-CPSCom.2010.102}
+}
+@book{kepner2011graph,
+  title     = {Graph algorithms in the language of linear algebra},
+  author    = {Kepner, Jeremy and Gilbert, John},
+  year      = {2011},
+  publisher = {SIAM}
+}
+@inproceedings{8091098,
+  author    = {Kepner, Jeremy and Kumar, Manoj and Moreira, José and Pattnaik, Pratap and Serrano, Mauricio and Tufo, Henry},
+  booktitle = {2017 IEEE High Performance Extreme Computing Conference (HPEC)},
+  title     = {Enabling massive deep neural networks with the GraphBLAS},
+  year      = {2017},
+  volume    = {},
+  number    = {},
+  pages     = {1-10},
+  doi       = {10.1109/HPEC.2017.8091098}
+}

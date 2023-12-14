@@ -3,11 +3,11 @@
 
 \section{Эксперимент}
 \subsection{Цель эксперимента}
-Целью эксперимента является сравнение оптимизированных версий функций с их не оптимизированными аналогами.
+Целью эксперимента является сравнение оптимизированных версий функций с их неоптимизированными аналогами по времени исполнения.
 \subsection{Условия эксперимента}
-Разряженные матрицы были взяты из SuiteSparse Matrix Collection\footnote{SuiteSparse Matrix Collection: \url{http://sparse.tamu.edu/}. (дата обращения:   \DTMdate{2023-12-09}).} и представлены в таблице
-\ref{used_matrixes}
-
+Разреженные матрицы были взяты из SuiteSparse Matrix Collection\footnote{SuiteSparse Matrix Collection: \url{http://sparse.tamu.edu/}. (дата обращения:   \DTMdate{2023-12-09}).} и представлены в таблице
+\ref{used_matrixes}, где размер уже приведён к соответствующим степеням двойки для корректного построения дерева квадрантов.
+%поправить и записать нормально размер
 \begin{table}[h!]
     \rowcolors{2}{black!2}{black!10}
     \def\arraystretch{1.1}  % Растяжение строк в таблицах
@@ -15,42 +15,57 @@
     \centering
     % \resizebox{\linewidth}{!}{%
     \caption{Использованные матрицы}
-    \begin{tabular}[C]{l|r|r}
+    \begin{tabular}[C]{l|
+            c
+            |r|r}
         \toprule
-        Название &Размер& Ненулевые элементы \\ \midrule
-        1138\_bus   ($Q_1$) & 1295044  & 2596 \\
-        ex31        ($Q_2$)& 15280281 & 115357 \\
-        meg4        ($Q_3$)& 34339600 & 26324 \\
-        lp\_cre\_b  ($Q_4$)& 744217776 & 260785 \\
-        mc2depi     ($Q_5$)& 276491930625 & 2100225 \\
-        Hardesty2   ($Q_6$)& 282359789145 & 4020731 \\
-        GL7d16      ($Q_7$)& 439608168408 & 14488881 \\
-        ecology1    ($Q_8$)& 1000000000000 & 2998000 \\
-        webbase-1M  ($Q_9$)& 1000010000025  & 3105536 \\
+        Название &\multicolumn{1}{r|}{Размер}& Ненулевые элементы&\% заполненности  \\ \midrule
+        meg4        ($Q_1$)& {$2^{13}$}\times{$2^{13}$} & 26324& 0,0766 \\
+        aircraft    ($Q_2$)& {$2^{13}$}\times{$2^{13}$} & 20267 & 0,0718 \\
+        fd12        ($Q_3$)& {$2^{13}$}\times{$2^{13}$} & 28462 & 0,0506 \\
+        mc2depi     ($Q_4$)& {$2^{20}$}\times{$2^{20}$} & 2100225 & 0,0007 \\
+        Hardesty2   ($Q_5$)& {$2^{20}$}\times{$2^{20}$} & 4020731 & 0,0014\\
+        ecology1    ($Q_6$)& {$2^{20}$}\times{$2^{20}$} & 2998000 & 0,0002 \\
+        webbase-1M  ($Q_7$)& {$2^{20}$}\times{$2^{20}$} & 3105536 & 0,0003\\
         \bottomrule
     \end{tabular}
     \label{used_matrixes}
 \end{table}
 
-{\small\textit{Здесь будут характеристики билдербоя}}. Для измерений использовалась библиотека criterion\footnote{Criterion: \url{https://github.com/haskell/criterion}. (Дата обращения: \DTMdate{2023-12-10})}.
+Ниже представлены характеристики оборудования, на котором производились измерения.
+\begin{verbatim}
+    Operating System: Debian, unstable
+    \end{verbatim}
+
+\subsubsection*{CPU}
+\begin{verbatim}
+    Architecture:       x86_64
+    Model name:         Intel(R) Core(TM) i7-4790 CPU @ 3.60
+    \end{verbatim}
+
+\subsubsection*{RAM}
+\begin{verbatim}
+    Total (Gi): 32
+\end{verbatim}
+Для измерений использовалась библиотека criterion\footnote{Criterion: \url{https://github.com/haskell/criterion}. (Дата обращения: \DTMdate{2023-12-10})}.
 
 Были произведены замеры работы следующих функций:
 \begin{itemize}
-    \item measurement1 = $zipWithBinFunc4\ (+) \ Q_1 \ Q_1 \ Q_1\ Q_1$
-    \item measurement2 = $zipWithBinFunc4\ (+) \ Q_6 \ Q_7 \ Q_8\ Q_9$
-    \item measurement3 = $zipWith4Funcs\ (+) \ (*)\ (\cdot) \ Q_8 \ Q_9 \ Q_7\ Q_7$
-    \item measurement4 = $map2\ (\cdot)\ (Q_1 \times Q_2)\ Q_1 $
+    \item measurement1 = $zipWithBinFunc4\ (+) \ Q_6 \ Q_6 \ Q_6\ Q_6$
+    \item measurement2 = $zipWithBinFunc4\ (+) \ Q_5 \ Q_7 \ Q_5\ Q_6$
+    \item measurement3 = $zipWith4Funcs\ (+) \ (*)\ (revDiv) \ Q_5 \ Q_7 \ Q_5\ Q_6$
+    \item measurement4 = $map2\ revDiv\ (Q_3 \times Q_1)\ Q_2 $
 \end{itemize}
-Где $(+),\ (*), \ (\cdot), \ (-) $ ~--- это операции сложения, умножения конкатенации и разности над вещественными числами соответственно, $\times$~--- операция умножения матриц над вещественными числами.
+Где $(+),\ (*), \ (revDiv) $ ~--- это операции сложения, умножения и обратного деления ($revDiv \ a \ b = b / a $) над вещественными числами соответственно, $\times$~--- операция умножения матриц над вещественными числами.
 \begin{itemize}
     \item $map2$~--- функция, применяющая данную бинарную операцию элементам первой матрицы к элементам второй\\($A_{m\times n} = (a_{i, j}), \ B_{m\times n} = (b_{i, j}), \quad map2 \ (+)\ A \ B = (a_{i, j} + b_{i, j})$);
     \item $zipWithBinFunc4$~--- функция, эквивалентная последовательному применению $map2$ относительно одной и той же функции к данным четырём матрицам;
     \item $zipWith4Funcs$~--- функция, эквивалентная последовательному применению $map2$ относительно соответственно трёх переданных бинарных функций к четырём переданным матрицам.
 \end{itemize}
 \subsection{Результаты}
-Результаты измерений представлены в таблице \ref{results}, где указано среднее время $\pm$ стандартное отклонение в секундах.Оптимизированная версия на \Th{} (TH), обычная версия на \Haskell{} (RH)
+Результаты измерений представлены в таблице \ref{results}, где указано среднее время $\pm$ стандартное отклонение в секундах.
+Оптимизированная версия на \Th{}, обычная версия на \Haskell{}.
 
-\textit{Здесь будет табличка с измерениями, пока не успеваю, но там будет видно, что оптимизированная версия выигрывает у неоптимизированной в поэлементных операциях, но не даёт значительного выигрыша при умножении}
 \begin{table}[h!]
     \rowcolors{2}{black!2}{black!10}
     \def\arraystretch{1.1}  % Растяжение строк в таблицах
@@ -58,13 +73,22 @@
     \centering
     % \resizebox{\linewidth}{!}{%
     \caption{Результаты измерений}
-    \begin{tabular}[C]{l|r|r}
+    \begin{tabular}[C]{l|
+            *2{S
+                        [table-figures-uncertainty=3, separate-uncertainty=true, table-align-uncertainty=true,
+                            table-figures-integer=2, table-figures-decimal=3, round-precision=3,
+                            table-number-alignment=center]
+                }
+        }
         \toprule
-        Measurement num& TH& RH \\ \midrule
+        Measurement num& \multicolumn{1}{r}{\Th}& \multicolumn{1}{r}{\Haskell} \\ \midrule
+        measurement1 & 1.05 \pm 0.08 & 2.53 \pm0.12   \\ \midrule
+        measurement2 & 4.010 \pm 0.430 & 7.37 \pm0.001  \\ \midrule
+        measurement3 & 2.28 \pm 0.001 & 4.57 \pm  0.447  \\ \midrule
+        measurement4 & 74.2 \pm 0.46  & 76.7 \pm  0.07   \\
         \bottomrule
     \end{tabular}
     \label{results}
 \end{table}
 
-
-Анализируя полученные данные, можно заключить, что оптимизация позволила значительно сократить время работы программы для поэлементных операций.
+Анализируя полученные данные, можно заключить, что оптимизация позволила значительно, почти в 2 раза, сократить время работы программы для поэлементных операций.
